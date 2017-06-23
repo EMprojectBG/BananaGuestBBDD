@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.netmind.db.MaquillajeDAO;
-import com.netmind.db.MaquillajeDAOImpl;
-import com.netmind.models.Maquillaje;
-import com.netmind.models.Usuario;
+import com.netmind.db.ProyectoDAO;
+import com.netmind.db.ProyectoDAOImpl;
+import com.netmind.models.ProyectoB;
+import com.netmind.models.UsuarioB;
 
 @WebServlet("/lista_maquillajes")
-public class ListaMaquillajesServlet extends HttpServlet {
+public class PaginaprincipalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger=Logger.getLogger("ListaMaquillajesServlet");
 	
@@ -25,11 +25,11 @@ public class ListaMaquillajesServlet extends HttpServlet {
 		HttpSession misession= (HttpSession)request.getSession();
 		
 		if( misession.getAttribute("usuario")!=null ){
-			Usuario elUsuario=(Usuario) misession.getAttribute("usuario");
-			MaquillajeDAO mDAO=(MaquillajeDAO)MaquillajeDAOImpl.getInstance();
+			UsuarioB elUsuario=(UsuarioB) misession.getAttribute("usuario");
+			ProyectoDAO mDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
 			
-			List<Maquillaje> listaMaquillajes = mDAO.getUserMaquillajes(elUsuario.getUid() );
-			request.setAttribute("listaMaquillajesAMostrar", listaMaquillajes);
+			List<ProyectoB> listaProyectos = mDAO.getUserProyecto(elUsuario.getUid() );
+			request.setAttribute("listaMaquillajesAMostrar", listaProyectos);
 			
 			request.getRequestDispatcher("plantilla_maquillajes.jsp").forward(request, response);
 		}else{

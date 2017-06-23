@@ -5,28 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Logger;
 
-import com.netmind.models.Usuario;
+import com.netmind.models.UsuarioB;
 
-public final class UsuarioDAOImpl extends UsuarioDAO {
-	private static Logger logger = Logger.getLogger("UsuarioDAOImpl");
+public final class UsuarioBBDAOImpl extends UsuarioBDAO {
+	private static Logger logger = Logger.getLogger("UsuarioBBDAOImpl");
 	
-	private static UsuarioDAOImpl instance = null;
+	private static UsuarioBBDAOImpl instance = null;
 
-	public static UsuarioDAOImpl getInstance() {
+	public static UsuarioBBDAOImpl getInstance() {
 		if (instance == null) {
-			instance = new UsuarioDAOImpl();
+			instance = new UsuarioBBDAOImpl();
 		}
 		return instance;
 	}
 	
 	@Override
-	public Usuario getUsuario(String email, String pass) {
-		Usuario usuarioADevolver = null;
+	public UsuarioB getUsuarioB(String email, String password) {
+		UsuarioB UsuarioBADevolver = null;
 
 		try {
 			Connection conn = datasource.getConnection();
 			// ordenes sql
-			String sql = "SELECT u.* FROM usuario u WHERE u.email=? AND password=? LIMIT 1";
+			String sql = "SELECT u.* FROM UsuarioB u WHERE u.email=? AND password=? LIMIT 1";
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setString(1, email);
 			pstm.setString(2, pass);
@@ -35,7 +35,7 @@ public final class UsuarioDAOImpl extends UsuarioDAO {
 
 			if (rs.next()) {
 
-				usuarioADevolver = new Usuario(rs.getInt("uid"), rs.getString("nombre"), rs.getString("apellido"),
+				UsuarioBADevolver = new UsuarioB(rs.getInt("uid"), rs.getString("nombre"), rs.getString("apellido"),
 						rs.getString("email"), rs.getString("coquetitud"), rs.getDouble("saldo"), "",
 						rs.getDate("nacimiento"), rs.getInt("activo"));
 			}
@@ -47,38 +47,21 @@ public final class UsuarioDAOImpl extends UsuarioDAO {
 
 		} catch (Exception e) {
 			logger.severe("Error en la conexión de BBDD:" + e);
-			usuarioADevolver = null;
+			UsuarioBADevolver = null;
 		}
 
-		return usuarioADevolver;
+		return UsuarioBADevolver;
 	}
 
-	@Override
-	public boolean delUsuario(int uid) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
-	public boolean insertUsuario(Usuario user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateUsuario(Usuario user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Usuario getUsuario(int uid) {
-		Usuario usuarioADevolver = null;
+	public UsuarioB getUsuarioB(int uid) {
+		UsuarioB UsuarioBADevolver = null;
 
 		try {
 			Connection conn = datasource.getConnection();
 			// ordenes sql
-			String sql = "SELECT u.* FROM usuario u WHERE u.uid=?LIMIT 1";
+			String sql = "SELECT u.* FROM UsuarioB u WHERE u.uid=?LIMIT 1";
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, uid);
 
@@ -86,9 +69,12 @@ public final class UsuarioDAOImpl extends UsuarioDAO {
 
 			if (rs.next()) {
 
-				usuarioADevolver = new Usuario(rs.getInt("uid"), rs.getString("nombre"), rs.getString("apellido"),
-						rs.getString("email"), rs.getString("coquetitud"), rs.getDouble("saldo"), "",
-						rs.getDate("nacimiento"), rs.getInt("activo"));
+				UsuarioBADevolver = new UsuarioB(rs.getInt("uid"), 
+						rs.getString("nombre"), 
+						rs.getString("apellido"),
+						rs.getString("email"), 
+						rs.getString("password"),
+						rs.getInt("activo"));
 			}
 
 			pstm.close();
@@ -98,10 +84,10 @@ public final class UsuarioDAOImpl extends UsuarioDAO {
 
 		} catch (Exception e) {
 			logger.severe("Error en la conexión de BBDD:" + e);
-			usuarioADevolver = null;
+			UsuarioBADevolver = null;
 		}
 
-		return usuarioADevolver;
+		return UsuarioBADevolver;
 	}
 
 }

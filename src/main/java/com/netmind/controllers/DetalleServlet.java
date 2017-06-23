@@ -12,16 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.netmind.db.CompraDAO;
-import com.netmind.db.CompraDAOImpl;
-import com.netmind.db.MaquillajeDAO;
-import com.netmind.db.MaquillajeDAOImpl;
+import com.netmind.db.TareaDAO;
+import com.netmind.db.TareaDAOImpl;
+import com.netmind.db.ProyectoDAO;
+import com.netmind.db.ProyectoDAOImpl;
 import com.netmind.models.Compra;
 import com.netmind.models.Maquillaje;
+import com.netmind.models.ProyectoB;
+import com.netmind.models.TareaB;
 import com.netmind.models.Usuario;
+import com.netmind.models.UsuarioB;
 
-@WebServlet("/comprar")
-public class ComprarServlet extends HttpServlet {
+@WebServlet("/detalle")
+public class DetalleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,11 +32,11 @@ public class ComprarServlet extends HttpServlet {
 		HttpSession misession = (HttpSession) request.getSession();
 
 		if (misession.getAttribute("usuario") != null) {
-			MaquillajeDAO mDAO=(MaquillajeDAO)MaquillajeDAOImpl.getInstance();
-			List<Maquillaje> listaMaquillajes = mDAO.getMaquillajes();
-			request.setAttribute("listaMaquillajesAMostrar", listaMaquillajes);
+			ProyectoDAO mDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
+			List<ProyectoB> listaMaquillajes = mDAO.getProyecto();
+			request.setAttribute("listaProyectosAMostrar", listaMaquillajes);
 
-			request.getRequestDispatcher("comprar.jsp").forward(request, response);
+			request.getRequestDispatcher("proyectos.jsp").forward(request, response);
 		} else {
 			misession.invalidate();
 			response.sendRedirect("login");
@@ -46,25 +49,25 @@ public class ComprarServlet extends HttpServlet {
 
 		if (misession.getAttribute("usuario") != null) {
 
-			int cosmetico = request.getParameter("cosmetico") != null
-					? Integer.parseInt(request.getParameter("cosmetico")) : 0;
+			int userproyecto = request.getParameter("userproyecto") != null
+					? Integer.parseInt(request.getParameter("userproyecto")) : 0;
 			int cantidad = request.getParameter("cantidad") != null
 					? Integer.parseInt(request.getParameter("cantidad")) : 0;
 
-			if (cosmetico > 0 && cantidad > 0) {
+			if (userproyecto > 0 && cantidad > 0) {
 
-				Usuario elUsuario = (Usuario) misession.getAttribute("usuario");
-				MaquillajeDAO mDAO=(MaquillajeDAO)MaquillajeDAOImpl.getInstance();
-				CompraDAO cDAO=(CompraDAO)CompraDAOImpl.getInstance();
+				UsuarioB elUsuario = (UsuarioB) misession.getAttribute("usuario");
+				ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
+				TareaDAO tDAO=(TareaDAO)TareaDAOImpl.getInstance();
 
 				Calendar today = Calendar.getInstance();
 				Date todayDate = today.getTime();
 				
-				Maquillaje unMaq= mDAO.getMaquillaje(cosmetico);
+				ProyectoB unProy= pDAO.getProyecto(userproyecto);
 
-				Compra nuevaCompra = new Compra(0, elUsuario, unMaq, cantidad, todayDate);
+				TareaB nuevaTarea = new TareaB(idTarea, nombreTarea, descTarea, responsable, usuariosImp);
 
-				if (!cDAO.insertCompra(nuevaCompra)) {
+				if (!tDAO.insertTarea(nuevaTarea)) {
 					request.setAttribute("error", "No se ha podido terminar el proceso :-(. Vuelve a intentarlo...");
 					doGet(request, response);
 				} else {

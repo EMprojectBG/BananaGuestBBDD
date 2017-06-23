@@ -15,6 +15,7 @@ import com.netmind.db.DAOFactory;
 import com.netmind.db.UsuarioDAO;
 import com.netmind.db.UsuarioDAOImpl;
 import com.netmind.models.Usuario;
+import com.netmind.models.UsuarioB;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -26,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 		HttpSession misession= (HttpSession)request.getSession();
 		
 		if( misession.getAttribute("usuario")!=null ){
-			request.getRequestDispatcher("/lista_maquillajes").forward(request, response);
+			request.getRequestDispatcher("/paginaprincipalServlet").forward(request, response);
 		}else{
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
@@ -41,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		
 		UsuarioDAO userDAO = (UsuarioDAO) DAOFactory.getInstance().getDAO("usuario");
 		
-		Usuario elUsuario = userDAO.getUsuario(email, contrasena);
+		UsuarioB elUsuario = userDAO.getUsuario(email, password);
 		
 		if( elUsuario!=null ){
 			HttpSession misession= (HttpSession)request.getSession();
@@ -56,9 +57,6 @@ public class LoginServlet extends HttpServlet {
 	}
 
 }
-
-
-
 
 
 

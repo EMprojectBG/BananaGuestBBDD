@@ -15,7 +15,7 @@ public class DAO {
 		try{
 			Context initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env"); 
-			this.datasource = (DataSource)envContext.lookup("jdbc/maquillajedb");//jdbc... es el JNDI
+			this.datasource = (DataSource)envContext.lookup("jdbc/bananadb");
 		}catch (Exception e) {
 			logger.info("Error al instanciar Datasource!!!!");
 			e.printStackTrace();

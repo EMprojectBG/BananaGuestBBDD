@@ -8,22 +8,23 @@ import java.util.logging.Logger;
 
 import com.netmind.models.Compra;
 import com.netmind.models.Maquillaje;
+import com.netmind.models.TareaB;
 
-public final class CompraDAOImpl extends CompraDAO {
+public final class TareaDAOImpl extends TareaDAO {
 	private static Logger logger = Logger.getLogger("CompraDAOImpl");
 
-	private static CompraDAOImpl instance = null;
+	private static TareaDAOImpl instance = null;
 
-	public static CompraDAOImpl getInstance() {
+	public static TareaDAOImpl getInstance() {
 		if (instance == null) {
-			instance = new CompraDAOImpl();
+			instance = new TareaDAOImpl();
 		}
 		return instance;
 	}
 
 	@Override
-	public Compra getCompra(int cid) {
-		Compra compraADevolver = null;
+	public TareaB getTarea(int cid) {
+		TareaB compraADevolver = null;
 
 		try {
 			Connection conn = this.datasource.getConnection();
@@ -33,17 +34,17 @@ public final class CompraDAOImpl extends CompraDAO {
 			pstm.setInt(1, cid);
 			
 			UsuarioDAO uDAO=(UsuarioDAO)UsuarioDAOImpl.getInstance();
-			MaquillajeDAO mDAO=(MaquillajeDAO)MaquillajeDAOImpl.getInstance();
+			ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
 
 			ResultSet rs = pstm.executeQuery();
 
 			if (rs.next()) {
 
-				compraADevolver = new Compra(cid,
-						uDAO.getUsuario(rs.getInt("usuario")),
-						mDAO.getMaquillaje(rs.getInt("cosmetico")), 
-						rs.getInt("cantidad"), 
-						rs.getDate("fecha"));
+				compraADevolver = new TareaB(rs.getInt("idTarea"), 
+						rs.getString("nombreTarea"), 
+						rs.getString("nombreTarea"), 
+						rs.getString("responsable"),
+						rs.getInt("usuariosImp"));
 			}
 
 			pstm.close();
@@ -60,13 +61,7 @@ public final class CompraDAOImpl extends CompraDAO {
 	}
 
 	@Override
-	public boolean delCompra(int mid) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean insertCompra(Compra nuevaCompra) {
+	public boolean insertTarea(TareaB nuevaTarea) {
 		boolean exito = false;
 
 		try {
@@ -79,12 +74,12 @@ public final class CompraDAOImpl extends CompraDAO {
 				// INSERTAR EN COMPRA
 				String sql = "INSERT INTO compra VALUES(NULL,?,?,?,?)";
 				PreparedStatement pstm = conn.prepareStatement(sql);
-				pstm.setInt(1, nuevaCompra.getUsuario().getUid());
-				pstm.setInt(2, nuevaCompra.getCosmetico().getMid());
-				pstm.setInt(3, nuevaCompra.getCantidad());
+				pstm.setInt(1, nuevaTarea.getUsuario().getUid());
+				pstm.setInt(2, nuevaTarea.getCosmetico().getMid());
+				pstm.setInt(3, nuevaTarea.getCantidad());
 
 				SimpleDateFormat sdfr = new SimpleDateFormat("yyyyMMdd");
-				pstm.setString(4, sdfr.format(nuevaCompra.getFecha()));
+				pstm.setString(4, sdfr.format(nuevaTarea.getFecha()));
 
 				int rows = pstm.executeUpdate();
 
@@ -93,8 +88,8 @@ public final class CompraDAOImpl extends CompraDAO {
 				// ACTUALIZAR SALDO DE USUARIO
 				sql = "UPDATE usuario u SET u.saldo=u.saldo-? WHERE u.uid=?";
 				pstm = conn.prepareStatement(sql);
-				pstm.setInt(1, nuevaCompra.getCosmetico().getPrecio() * nuevaCompra.getCantidad());
-				pstm.setInt(2, nuevaCompra.getUsuario().getUid());
+				pstm.setInt(1, nuevaTarea.getCosmetico().getPrecio() * nuevaTarea.getCantidad());
+				pstm.setInt(2, nuevaTarea.getUsuario().getUid());
 				rows = pstm.executeUpdate();
 
 				pstm.close();
@@ -102,8 +97,8 @@ public final class CompraDAOImpl extends CompraDAO {
 				// ACTUALIZAR EXISTENCIAS DE MAQUILLAJE
 				sql = "UPDATE maquillaje m SET m.existencias=m.existencias-? WHERE m.mid=?";
 				pstm = conn.prepareStatement(sql);
-				pstm.setInt(1, nuevaCompra.getCantidad());
-				pstm.setInt(2, nuevaCompra.getCosmetico().getMid());
+				pstm.setInt(1, nuevaTarea.getCantidad());
+				pstm.setInt(2, nuevaTarea.getCosmetico().getMid());
 				rows = pstm.executeUpdate();
 
 				pstm.close();
@@ -129,9 +124,4 @@ public final class CompraDAOImpl extends CompraDAO {
 		return exito;
 	}
 
-	@Override
-	public boolean updateCompra(Compra compra) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
