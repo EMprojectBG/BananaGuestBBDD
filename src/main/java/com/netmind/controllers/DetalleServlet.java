@@ -30,13 +30,13 @@ public class DetalleServlet extends HttpServlet {
 
 		if (misession.getAttribute("usuario") != null) {
 			ProyectoDAO mDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
-			List<ProyectoB> listaMaquillajes = mDAO.getProyecto();
-			request.setAttribute("listaProyectosAMostrar", listaMaquillajes);
+			List<ProyectoB> listaProyectos = mDAO.getProyecto();
+			request.setAttribute("getUserProyecto", listaProyectos);
 
 			request.getRequestDispatcher("proyectos.jsp").forward(request, response);
 		} else {
 			misession.invalidate();
-			response.sendRedirect("login");
+			response.sendRedirect("loginServlet");
 		}
 	}
 
@@ -48,10 +48,8 @@ public class DetalleServlet extends HttpServlet {
 
 			int userproyecto = request.getParameter("userproyecto") != null
 					? Integer.parseInt(request.getParameter("userproyecto")) : 0;
-			int cantidad = request.getParameter("cantidad") != null
-					? Integer.parseInt(request.getParameter("cantidad")) : 0;
-
-			if (userproyecto > 0 && cantidad > 0) {
+		
+			if (userproyecto > 0) {
 
 				UsuarioB elUsuario = (UsuarioB) misession.getAttribute("usuario");
 				ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();

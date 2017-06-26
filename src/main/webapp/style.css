@@ -347,3 +347,11 @@ form{
         text-align: center;
 }
 
+/*Detalle*/
+#detalle{
+	display:inline;
+	text-align: center;
+	position: relative;
+	margin-top: 10px;
+	
+}

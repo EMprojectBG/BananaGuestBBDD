@@ -16,10 +16,10 @@ import com.netmind.db.ProyectoDAOImpl;
 import com.netmind.models.ProyectoB;
 import com.netmind.models.UsuarioB;
 
-@WebServlet("/lista_maquillajes")
+@WebServlet("/PaginaprincipalServlet")
 public class PaginaprincipalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger logger=Logger.getLogger("ListaMaquillajesServlet");
+	private static Logger logger=Logger.getLogger("PaginaprincipalServlet");
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession misession= (HttpSession)request.getSession();
@@ -29,12 +29,12 @@ public class PaginaprincipalServlet extends HttpServlet {
 			ProyectoDAO mDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
 			
 			List<ProyectoB> listaProyectos = mDAO.getUserProyecto(elUsuario.getUid() );
-			request.setAttribute("listaMaquillajesAMostrar", listaProyectos);
+			request.setAttribute("getUserProyecto", listaProyectos);
 			
-			request.getRequestDispatcher("plantilla_maquillajes.jsp").forward(request, response);
+			request.getRequestDispatcher("paginaprincipal.jsp").forward(request, response);
 		}else{
 			misession.invalidate();
-			response.sendRedirect("login");
+			response.sendRedirect("loginServlet");
 		}
 		
 	}

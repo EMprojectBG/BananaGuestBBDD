@@ -13,10 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import com.netmind.db.DAOFactory;
 import com.netmind.db.UsuarioDAO;
-import com.netmind.db.UsuarioDAOImpl;
 import com.netmind.models.UsuarioB;
 
-@WebServlet("/login")
+
+
+@WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger=Logger.getLogger("LoginServlet");
@@ -28,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 		if( misession.getAttribute("usuario")!=null ){
 			request.getRequestDispatcher("/paginaprincipalServlet").forward(request, response);
 		}else{
-			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("pagina2.jsp");
 			rd.forward(request, response);
 		}
 	}
@@ -47,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession misession= (HttpSession)request.getSession();
 			misession.setAttribute("usuario", elUsuario);
 			
-			request.getRequestDispatcher("/lista_maquillajes").forward(request, response);
+			request.getRequestDispatcher("/paginaprincipalServlet").forward(request, response);
 		}else{
 			request.setAttribute("mierror", "Email y contraseña erroneos");
 			doGet(request, response);
