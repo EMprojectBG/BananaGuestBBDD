@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 		HttpSession misession= (HttpSession)request.getSession();
 		
 		if( misession.getAttribute("usuario")!=null ){
-			request.getRequestDispatcher("/paginaprincipalServlet").forward(request, response);
+			request.getRequestDispatcher("/PaginaprincipalServlet").forward(request, response);
 		}else{
 			RequestDispatcher rd = request.getRequestDispatcher("pagina2.jsp");
 			rd.forward(request, response);
@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession misession= (HttpSession)request.getSession();
 			misession.setAttribute("usuario", elUsuario);
 			
-			request.getRequestDispatcher("/paginaprincipalServlet").forward(request, response);
+			request.getRequestDispatcher("/PaginaprincipalServlet").forward(request, response);
 		}else{
 			request.setAttribute("mierror", "Email y contraseña erroneos");
 			doGet(request, response);

@@ -40,7 +40,8 @@ public final class ProyectoDAOImpl extends ProyectoDAO {
 						rs.getString("nombreProyecto"),
 						rs.getString("descProyecto"), 
 						rs.getDate("fechaFinProyecto"),
-						rs.getBoolean("estado"));
+						rs.getBoolean("estado"),
+						null);
 			}
 
 			pstm.close();
@@ -74,7 +75,8 @@ public final class ProyectoDAOImpl extends ProyectoDAO {
 						rs.getString("nombreProyecto"),
 						rs.getString("descProyecto"), 
 						rs.getDate("fechaFinProyecto"),
-						rs.getBoolean("estado")));
+						rs.getBoolean("estado"),
+						null));
 			}
 
 			pstm.close();
@@ -109,7 +111,8 @@ public final class ProyectoDAOImpl extends ProyectoDAO {
 						rs.getString("nombreProyecto"),
 						rs.getString("descProyecto"), 
 						rs.getDate("fechaFinProyecto"),
-						rs.getBoolean("estado")));
+						rs.getBoolean("estado"),
+						null));
 			}
 
 			pstm.close();
