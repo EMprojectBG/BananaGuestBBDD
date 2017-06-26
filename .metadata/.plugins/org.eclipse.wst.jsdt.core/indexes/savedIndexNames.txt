@@ -1,0 +1,8 @@
+INDEX VERSION 1.3+C:\Marta\workspace\WSBananaGuest\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+528779435.index
+112202456.index
+4087312046.index
+3182867843.index
+4022876597.index
+2494225146.index
+3365065295.index

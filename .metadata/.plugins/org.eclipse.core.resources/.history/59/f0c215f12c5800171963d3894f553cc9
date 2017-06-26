@@ -1,0 +1,12 @@
+package com.netmind.models;
+
+import java.util.Date;
+
+public class Proyecto {
+
+	private int idProyecto;
+	private String nombreProyecto;
+	private String descProyecto;
+	private Date fechaFinProyecto;
+	private boolean estado;
+}

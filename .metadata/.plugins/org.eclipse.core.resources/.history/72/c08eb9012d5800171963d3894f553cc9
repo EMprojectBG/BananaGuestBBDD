@@ -1,0 +1,23 @@
+package com.netmind.models;
+
+import java.util.Date;
+
+public class Proyecto {
+
+	private int idProyecto;
+	private String nombreProyecto;
+	private String descProyecto;
+	private Date fechaFinProyecto;
+	private boolean estado;
+	
+
+	public Proyecto(int idProyecto, String nombreProyecto, String descProyecto, Date fechaFinProyecto, boolean estado) {
+		super();
+		this.idProyecto = idProyecto;
+		this.nombreProyecto = nombreProyecto;
+		this.descProyecto = descProyecto;
+		this.fechaFinProyecto = fechaFinProyecto;
+		this.estado = estado;
+	}
+	
+}

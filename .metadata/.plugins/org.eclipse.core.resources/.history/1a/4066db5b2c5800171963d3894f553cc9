@@ -1,0 +1,13 @@
+package com.netmind.models;
+import java.util.Date;
+
+public class UsuarioB {
+
+public class Usuario {
+	private	int	uid;
+	private	String	nombre;
+	private	String	apellido;
+	private	String	email;
+	private	String	password;
+	private	int	activo;
+}
