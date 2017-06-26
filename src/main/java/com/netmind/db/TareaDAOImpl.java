@@ -21,15 +21,15 @@ public final class TareaDAOImpl extends TareaDAO {
 	}
 
 	@Override
-	public TareaB getTarea(int cid) {
-		TareaB compraADevolver = null;
+	public TareaB getTarea(int idTarea) {
+		TareaB tareasADevolver = null;
 
 		try {
 			Connection conn = this.datasource.getConnection();
 			// ordenes sql
 			String sql = "SELECT c.* FROM compra c WHERE c.cid=? LIMIT 1";
 			PreparedStatement pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, cid);
+			pstm.setInt(1, idTarea);
 			
 			UsuarioDAO uDAO=(UsuarioDAO)UsuarioDAOImpl.getInstance();
 			ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
@@ -38,7 +38,7 @@ public final class TareaDAOImpl extends TareaDAO {
 
 			if (rs.next()) {
 
-				compraADevolver = new TareaB(rs.getInt("idTarea"), 
+				tareasADevolver = new TareaB(rs.getInt("idTarea"), 
 						rs.getString("nombreTarea"), 
 						rs.getString("nombreTarea"), 
 						rs.getString("responsable"),
@@ -52,10 +52,10 @@ public final class TareaDAOImpl extends TareaDAO {
 
 		} catch (Exception e) {
 			logger.severe("Error en la conexión de BBDD:" + e);
-			compraADevolver = null;
+			tareasADevolver = null;
 		}
 
-		return compraADevolver;
+		return tareasADevolver;
 	}
 
 //	@Override
