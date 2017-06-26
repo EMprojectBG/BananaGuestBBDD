@@ -16,11 +16,8 @@ import com.netmind.db.TareaDAO;
 import com.netmind.db.TareaDAOImpl;
 import com.netmind.db.ProyectoDAO;
 import com.netmind.db.ProyectoDAOImpl;
-import com.netmind.models.Compra;
-import com.netmind.models.Maquillaje;
 import com.netmind.models.ProyectoB;
 import com.netmind.models.TareaB;
-import com.netmind.models.Usuario;
 import com.netmind.models.UsuarioB;
 
 @WebServlet("/detalle")
@@ -59,20 +56,17 @@ public class DetalleServlet extends HttpServlet {
 				UsuarioB elUsuario = (UsuarioB) misession.getAttribute("usuario");
 				ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
 				TareaDAO tDAO=(TareaDAO)TareaDAOImpl.getInstance();
-
-				Calendar today = Calendar.getInstance();
-				Date todayDate = today.getTime();
 				
 				ProyectoB unProy= pDAO.getProyecto(userproyecto);
 
-				TareaB nuevaTarea = new TareaB(idTarea, nombreTarea, descTarea, responsable, usuariosImp);
+//				TareaB nuevaTarea = new TareaB(idTarea, nombreTarea, descTarea, responsable, usuariosImp);
 
-				if (!tDAO.insertTarea(nuevaTarea)) {
-					request.setAttribute("error", "No se ha podido terminar el proceso :-(. Vuelve a intentarlo...");
-					doGet(request, response);
-				} else {
-					request.getRequestDispatcher("lista_maquillajes").forward(request, response);
-				}
+//				if (!tDAO.insertTarea(nuevaTarea)) {
+//					request.setAttribute("error", "No se ha podido terminar el proceso :-(. Vuelve a intentarlo...");
+//					doGet(request, response);
+//				} else {
+//					request.getRequestDispatcher("lista_maquillajes").forward(request, response);
+//				}
 				
 			} else {
 				request.setAttribute("error", "Selecciona un cosmético e indica una cantidad igual o mayor a uno");

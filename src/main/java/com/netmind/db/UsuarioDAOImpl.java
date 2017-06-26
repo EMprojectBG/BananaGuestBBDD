@@ -7,20 +7,20 @@ import java.util.logging.Logger;
 
 import com.netmind.models.UsuarioB;
 
-public final class UsuarioBBDAOImpl extends UsuarioBDAO {
+public final class UsuarioDAOImpl extends UsuarioDAO {
 	private static Logger logger = Logger.getLogger("UsuarioBBDAOImpl");
 	
-	private static UsuarioBBDAOImpl instance = null;
+	private static UsuarioDAOImpl instance = null;
 
-	public static UsuarioBBDAOImpl getInstance() {
+	public static UsuarioDAOImpl getInstance() {
 		if (instance == null) {
-			instance = new UsuarioBBDAOImpl();
+			instance = new UsuarioDAOImpl();
 		}
 		return instance;
 	}
 	
 	@Override
-	public UsuarioB getUsuarioB(String email, String password) {
+	public UsuarioB getUsuario(String email, String password) {
 		UsuarioB UsuarioBADevolver = null;
 
 		try {
@@ -29,15 +29,18 @@ public final class UsuarioBBDAOImpl extends UsuarioBDAO {
 			String sql = "SELECT u.* FROM UsuarioB u WHERE u.email=? AND password=? LIMIT 1";
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setString(1, email);
-			pstm.setString(2, pass);
+			pstm.setString(2, password);
 
 			ResultSet rs = pstm.executeQuery();
 
 			if (rs.next()) {
 
-				UsuarioBADevolver = new UsuarioB(rs.getInt("uid"), rs.getString("nombre"), rs.getString("apellido"),
-						rs.getString("email"), rs.getString("coquetitud"), rs.getDouble("saldo"), "",
-						rs.getDate("nacimiento"), rs.getInt("activo"));
+				UsuarioBADevolver = new UsuarioB(rs.getInt("uid"),
+						rs.getString("nombre"),
+						rs.getString("apellido"),
+						rs.getString("email"),
+						rs.getString("password"),
+						rs.getInt("activo"));
 			}
 
 			pstm.close();
@@ -55,7 +58,7 @@ public final class UsuarioBBDAOImpl extends UsuarioBDAO {
 
 
 	@Override
-	public UsuarioB getUsuarioB(int uid) {
+	public UsuarioB getUsuario(int uid) {
 		UsuarioB UsuarioBADevolver = null;
 
 		try {

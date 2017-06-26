@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import com.netmind.db.DAOFactory;
 import com.netmind.db.UsuarioDAO;
 import com.netmind.db.UsuarioDAOImpl;
-import com.netmind.models.Usuario;
 import com.netmind.models.UsuarioB;
 
 @WebServlet("/login")
@@ -36,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
-		String contrasena = request.getParameter("password");
+		String password = request.getParameter("password");
 		
 		//DBConnector dbc= DBConnector.getInstance();
 		
