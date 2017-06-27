@@ -21,7 +21,7 @@
 		<c:forEach var="proy" items="${listaProyectosAmostrar}" varStatus="counter">
 			<div>
 				<c:if test="${proy.estado}">
-					<li><a href="proyectosServlet?idp=${proy.nombreProyecto}"
+					<li><a href="proyectosServlet?idp=${proy.idProyecto}"
 						| <span>${proy.nombreProyecto}</span> -
 				  <span>${proy.idProyecto}</span> -
 				  <span>${proy.fechaFinProyecto}</span>></a>

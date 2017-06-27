@@ -26,9 +26,9 @@ public class PaginaprincipalServlet extends HttpServlet {
 		
 		if( misession.getAttribute("usuario")!=null ){
 			UsuarioB elUsuario=(UsuarioB) misession.getAttribute("usuario");
-			ProyectoDAO mDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
+			ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
 			
-			List<ProyectoB> listaProyectos = mDAO.getUserProyecto(elUsuario.getUid() );
+			List<ProyectoB> listaProyectos = pDAO.getUserProyecto(elUsuario.getUid() );
 			request.setAttribute("getUserProyecto", listaProyectos);
 			
 			request.getRequestDispatcher("paginaprincipal.jsp").forward(request, response);

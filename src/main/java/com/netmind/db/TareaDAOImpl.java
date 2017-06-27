@@ -3,6 +3,8 @@ package com.netmind.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -21,28 +23,25 @@ public final class TareaDAOImpl extends TareaDAO {
 	}
 
 	@Override
-	public TareaB getTarea(int idTarea) {
-		TareaB tareasADevolver = null;
+	public List <TareaB> getTarea(int idProyecto) {
+		List<TareaB> tareasADevolver = new ArrayList<TareaB>();
 
 		try {
 			Connection conn = this.datasource.getConnection();
-			// ordenes sql
-			String sql = "SELECT c.* FROM compra c WHERE c.cid=? LIMIT 1";
+
+			String sql = "SELECT t.* FROM tareab t WHERE t.idProyecto=? LIMIT 1";
 			PreparedStatement pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, idTarea);
-			
-			UsuarioDAO uDAO=(UsuarioDAO)UsuarioDAOImpl.getInstance();
-			ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
+			pstm.setInt(1, idProyecto);
 
 			ResultSet rs = pstm.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
-				tareasADevolver = new TareaB(rs.getInt("idTarea"), 
+				tareasADevolver.add (new TareaB(rs.getInt("idTarea"), 
 						rs.getString("nombreTarea"), 
 						rs.getString("nombreTarea"), 
 						rs.getString("responsable"),
-						rs.getInt("usuariosImp"));
+						rs.getInt("usuariosImp")));
 			}
 
 			pstm.close();
@@ -57,69 +56,5 @@ public final class TareaDAOImpl extends TareaDAO {
 
 		return tareasADevolver;
 	}
-
-//	@Override
-//	public boolean insertTarea(TareaB nuevaTarea) {
-//		boolean exito = false;
-//
-//		try {
-//
-//			Connection conn = this.datasource.getConnection();
-//
-//			try {
-//				conn.setAutoCommit(false);
-//
-//				// INSERTAR EN COMPRA
-//				String sql = "INSERT INTO tareaB VALUES(NULL,?,?,?,?)";
-//				PreparedStatement pstm = conn.prepareStatement(sql);
-//				pstm.setInt(1, nuevaTarea.getUsuario().getUid());
-//				pstm.setInt(2, nuevaTarea.getCosmetico().getMid());
-//				pstm.setInt(3, nuevaTarea.getCantidad());
-//
-//				SimpleDateFormat sdfr = new SimpleDateFormat("yyyyMMdd");
-//				pstm.setString(4, sdfr.format(nuevaTarea.getFecha()));
-//
-//				int rows = pstm.executeUpdate();
-//
-//				pstm.close();
-//
-//				// ACTUALIZAR SALDO DE USUARIO
-//				sql = "UPDATE usuario u SET u.saldo=u.saldo-? WHERE u.uid=?";
-//				pstm = conn.prepareStatement(sql);
-//				pstm.setInt(1, nuevaTarea.getCosmetico().getPrecio() * nuevaTarea.getCantidad());
-//				pstm.setInt(2, nuevaTarea.getUsuario().getUid());
-//				rows = pstm.executeUpdate();
-//
-//				pstm.close();
-//
-//				// ACTUALIZAR EXISTENCIAS DE MAQUILLAJE
-//				sql = "UPDATE proyectoB p SET p.existencias=p.existencias-? WHERE p.idProyecto=?";
-//				pstm = conn.prepareStatement(sql);
-//				pstm.setInt(1, nuevaTarea.getCantidad());
-//				pstm.setInt(2, nuevaTarea.getCosmetico().getMid());
-//				rows = pstm.executeUpdate();
-//
-//				pstm.close();
-//
-//				conn.commit();
-//
-//				conn.close();
-//
-//				logger.info("Inserción exitosa");
-//				exito = rows > 0 ? true : false;
-//
-//			} catch (Exception e) {
-//				conn.rollback();
-//				logger.severe("Transacción fallida:" + e.getMessage());
-//				exito = false;
-//			}
-//
-//		} catch (Exception e) {
-//			logger.severe("Error en la conexión de BBDD:" + e.getMessage());
-//			exito = false;
-//		}
-//
-//		return exito;
-//	}
 
 }
