@@ -1,0 +1,16 @@
+com\netmind\db\TareaDAOImpl.class
+com\netmind\db\DAOFactory.class
+com\netmind\util\PropertyValues.class
+com\netmind\db\UsuarioDAOImpl.class
+com\netmind\models\TareaB.class
+com\netmind\db\DAO.class
+com\netmind\db\TareaDAO.class
+com\netmind\controllers\LogoutServlet.class
+com\netmind\controllers\DetalleServlet.class
+com\netmind\controllers\LoginServlet.class
+com\netmind\controllers\PaginaprincipalServlet.class
+com\netmind\db\ProyectoDAOImpl.class
+com\netmind\db\UsuarioDAO.class
+com\netmind\models\UsuarioB.class
+com\netmind\db\ProyectoDAO.class
+com\netmind\models\ProyectoB.class

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.netmind.db.DAOFactory;
 import com.netmind.db.ProyectoDAO;
 import com.netmind.db.ProyectoDAOImpl;
 import com.netmind.models.ProyectoB;
@@ -26,10 +27,10 @@ public class PaginaprincipalServlet extends HttpServlet {
 		
 		if( misession.getAttribute("usuario")!=null ){
 			UsuarioB elUsuario=(UsuarioB) misession.getAttribute("usuario");
-			ProyectoDAO pDAO=(ProyectoDAO)ProyectoDAOImpl.getInstance();
+			ProyectoDAO pDAO=(ProyectoDAO)DAOFactory.getInstance().getDAO("proyecto");
 			
 			List<ProyectoB> listaProyectos = pDAO.getUserProyecto(elUsuario.getUid() );
-			request.setAttribute("getUserProyecto", listaProyectos);
+			request.setAttribute("listaProyectosAmostrar", listaProyectos);
 			
 			request.getRequestDispatcher("paginaprincipal.jsp").forward(request, response);
 		}else{

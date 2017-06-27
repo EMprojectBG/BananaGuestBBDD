@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.netmind.db.TareaDAO;
 import com.netmind.db.TareaDAOImpl;
+import com.netmind.db.DAOFactory;
 import com.netmind.db.ProyectoDAO;
 import com.netmind.db.ProyectoDAOImpl;
 import com.netmind.models.ProyectoB;
@@ -31,8 +32,8 @@ public class DetalleServlet extends HttpServlet {
 
 		if (misession.getAttribute("usuario") != null) {
 			
-			ProyectoDAO pDAO = (ProyectoDAO) ProyectoDAOImpl.getInstance();
-			TareaDAO tDAO = (TareaDAO) TareaDAOImpl.getInstance();
+			ProyectoDAO pDAO=(ProyectoDAO)DAOFactory.getInstance().getDAO("proyecto");
+			TareaDAO tDAO = (TareaDAO)DAOFactory.getInstance().getDAO("tarea");
 
 			int idP = request.getParameter("idProyecto") != null ? Integer.parseInt(request.getParameter("idProyecto"))
 					: 0;

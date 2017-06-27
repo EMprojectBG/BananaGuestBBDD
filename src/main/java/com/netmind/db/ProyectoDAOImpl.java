@@ -83,7 +83,7 @@ public final class ProyectoDAOImpl extends ProyectoDAO {
 
 			conn.close();
 
-			logger.info("Conexión exitosa");
+			logger.info("Conexión exitosa:"+listADevolver);
 
 		} catch (Exception e) {
 			logger.severe("Error en la conexión de BBDD:" + e);
