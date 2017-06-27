@@ -64,7 +64,7 @@ public final class ProyectoDAOImpl extends ProyectoDAO {
 		try {
 			Connection conn = this.datasource.getConnection();
 
-			String sql = "<sql>";
+			String sql = "SELECT p.* FROM proyectob p INNER JOIN tareab t ON t.idTarea=p.idProyecto WHERE t.Usuariob_uid=?";
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, uid);
 

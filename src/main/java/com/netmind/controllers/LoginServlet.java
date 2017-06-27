@@ -15,8 +15,6 @@ import com.netmind.db.DAOFactory;
 import com.netmind.db.UsuarioDAO;
 import com.netmind.models.UsuarioB;
 
-
-
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

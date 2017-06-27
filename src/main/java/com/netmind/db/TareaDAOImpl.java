@@ -29,7 +29,7 @@ public final class TareaDAOImpl extends TareaDAO {
 		try {
 			Connection conn = this.datasource.getConnection();
 
-			String sql = "SELECT t.* FROM tareab t WHERE t.idProyecto=? LIMIT 1";
+			String sql = "SELECT t.* FROM tareab t INNER JOIN proyecto p ON p.idProyecto=t.idTarea WHERE p.Usuario_uid = ?";
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idProyecto);
 

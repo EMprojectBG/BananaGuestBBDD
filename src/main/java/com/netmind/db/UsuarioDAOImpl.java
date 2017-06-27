@@ -25,7 +25,7 @@ public final class UsuarioDAOImpl extends UsuarioDAO {
 
 		try {
 			Connection conn = datasource.getConnection();
-			// ordenes sql
+		
 			String sql = "SELECT u.* FROM usuariob u WHERE u.email=? AND password=? LIMIT 1";
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setString(1, email);
